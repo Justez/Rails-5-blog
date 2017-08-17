@@ -12,6 +12,8 @@ gem 'jquery-rails'
 gem 'popper'
 gem 'friendly_id', '~> 5.1.0'
 gem 'devise'
+gem "react-rails"
+gem 'webpacker'
 gem 'rails', '~> 5.1.3'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
