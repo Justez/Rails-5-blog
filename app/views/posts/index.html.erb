@@ -1,25 +1,9 @@
 <%= provide(:page_title, 'All Posts') %>
 <%= provide(:blog_active, 'active') %>
 
-<p id="notice"><%= notice %></p>
-
 <h1>Posts</h1>
 <div class="row">
-<% @posts.each do |post| %>
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-block">
-        <h3 class="card-title"><%= post.title %></h3>
-        <p class="card-text"><%= post.description %></p>
-        <div class="btn-group" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-secondary"><%= link_to 'Show', post %></button>
-          <button type="button" class="btn btn-secondary"><%= link_to 'Edit', edit_post_path(post) %></button>
-          <button type="button" class="btn btn-secondary"><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></button>
-        </div>
-      </div>
-    </div>
-  </div>
-<% end %>
+  <%= render @posts %>
 </div>
 
 <br>

@@ -11,6 +11,7 @@ gem 'bootstrap', '4.0.0.alpha3'
 gem 'jquery-rails'
 gem 'popper'
 gem 'friendly_id', '~> 5.1.0'
+gem 'devise'
 gem 'rails', '~> 5.1.3'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
