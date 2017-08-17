@@ -2,8 +2,12 @@
 
 one:
   title: MyString
-  text: MyText
+  body: MyText
+  description: MyText
+  slug: MyString
 
 two:
   title: MyString
-  text: MyText
+  body: MyText
+  description: MyText
+  slug: MyString

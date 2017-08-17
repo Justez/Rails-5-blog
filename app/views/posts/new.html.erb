@@ -1,5 +1,8 @@
-<h1>New post</h1>
+<%= provide(:page_title, 'New Post') %>
+<%= provide(:blog_active, 'active') %>
 
-<%= render 'form' %>
+<h1>New Post</h1>
+
+<%= render 'form', post: @post %>
 
 <%= link_to 'Back', posts_path %>

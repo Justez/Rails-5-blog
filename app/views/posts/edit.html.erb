@@ -1,5 +1,9 @@
-<h1>Edit post</h1>
+<%= provide(:page_title, 'Edit Post') %>
+<%= provide(:blog_active, 'active') %>
 
-<%= render 'form' %>
+<h1>Editing Post</h1>
 
+<%= render 'form', post: @post %>
+
+<%= link_to 'Show', @post %> |
 <%= link_to 'Back', posts_path %>
