@@ -5,13 +5,13 @@
       <h3 class="card-title"><%= post.title %></h3>
       <p class="card-subtitle mb-2 text-muted"><%= post.display_published_date %></p>
       <p class="card-text"><%= truncate(post.description, length: 130) %></p>
-      <div class="btn-group" role="group" aria-label="Basic example">
-        <%= link_to 'Read', post, class: "btn btn-secondary"%>
+
+        <%= link_to 'Read', post, class: "btn btn-outline-primary"%>
         <% if user_signed_in? %>
           <%= link_to 'Edit', edit_post_path(post), class: "btn btn-secondary" %>
           <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-secondary" %>
         <% end %>
-      </div>
+
     </div>
   </div>
 </div>

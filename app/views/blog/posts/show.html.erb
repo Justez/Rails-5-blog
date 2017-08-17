@@ -27,6 +27,6 @@
   </div>
 </div>
 <% if user_signed_in? %>
-  <%= render 'comments/form', post: @post %>
-<% end %>  
+  <%= render 'blog/comments/form', post: @post %>
+<% end %>
 <%= render @post.comments %>
