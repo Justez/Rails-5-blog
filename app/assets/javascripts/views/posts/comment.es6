@@ -22,29 +22,16 @@ class Show extends React.Component {
         const body = document.getElementById('body').value;
         const commenter = document.getElementById('commenter').value;
         event.preventDefault()
-        /*fetch(url, {
-          method: 'post',
-          headers: {
-            "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-          },
-          body: 'body=' + body +'&commenter=' + commenter
-        })
-        .then(json)
-        .then(function (data) {
-          console.log('Request succeeded with JSON response', data);
-        })
-        .catch(function (error) {
-          console.log('Request failed', error);
-        });
+
         fetch(url, {
             method: 'POST',
             headers: {'Content-Type':'application/x-www-form-urlencoded'}, // this line is important, if this content-type is not set it wont work
-            body: 'body='+body+'commenter'+commenter
+            body: 'comment[body]='.concat(body,'&comment[commenter]',commenter)
           })
-          .then(function (data) {
-            console.log('Request succeeded with JSON response', data);
+          .then(function (response) {
+            console.log('Request succeeded with JSON response', response);
           });
-*/
+
         console.log("submitted")
         this.setState({comments: this.state.comments.concat(document.getElementById('body').value)})
     }
@@ -64,7 +51,7 @@ class Show extends React.Component {
               </div>
               <br/>
               <div className = "card col-md-10 offset-md-1 col-lg-10 offset-lg-1 text-xs-center">
-                <form action={link} method = "POST">
+                <form onSubmit={this.handleSubmit.bind(this)}>
                   <div className="form-group">
                     <label>Commenter</label>
                     <input name="comment[commenter]" type="text" className="form-control" id="commenter" placeholder="comment" />
