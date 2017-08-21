@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   root to: 'posts#index'
 
   get 'about' => 'pages#about', as: :about
-  get '/api/comments/:id', to: 'comments#show', as: :commentsJson
 
   resources :posts do
     resources :comments

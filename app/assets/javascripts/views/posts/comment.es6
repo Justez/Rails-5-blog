@@ -4,7 +4,7 @@ class Show extends React.Component {
     constructor(props) {
       super(props)
       this.state = {
-          comments: ['aaa']
+        comments: []
       }
 
       this.getComments()
@@ -13,11 +13,18 @@ class Show extends React.Component {
     getComments(){
       const url = document.URL + "/comments.json";
       fetch(url)
-        .then((resp) => resp.json()) // Transform the data into json
+        .then((response) => response.json()) // Transform the data into json
         .then(function(data) {
-          // Create and append the li's to the ul
-          console.log(JSON.stringify(data))
-          })
+          {
+            var elements = [];
+            data.forEach(
+              function(obj, index, value){
+                elements = elements.concat(obj);
+              }
+            )
+            console.log(elements);
+          }
+        })
     }
 
     handleSubmit(event) {
