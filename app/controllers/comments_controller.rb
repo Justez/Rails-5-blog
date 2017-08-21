@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  skip_before_action :verify_authenticity_token
 
   def index
     @post    = Post.friendly.find(params[:post_id])
@@ -9,10 +10,18 @@ class CommentsController < ApplicationController
   def create
       @post = Post.friendly.find(params[:post_id])
       @comment = @post.comments.create(comment_params)
-      redirect_to post_path(@post)
-      #render json: @comment
+      # redirect_to post_path(@post)
+      render json: @comment
   end
 
+  def new
+      @post = Post.friendly.find(params[:post_id])
+
+      # commenter, body
+      # @comment = @post.comments.create(comment_params)
+      # redirect_to post_path(@post)
+      render json: @post
+  end
 
   def show
       @post = Post.friendly.find(params[:id])

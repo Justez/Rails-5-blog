@@ -29,12 +29,6 @@
 
 <div id="showPost"></div>
 
-<%= render 'comment' %>
-
-<%= render @post.comments %>
-
-<%= render 'comments/form', post: @post %>
-<!-- <% if user_signed_in? %>
-  <%= render 'comments/form', post: @post %>
+ <% if user_signed_in? %>
+  <%= render 'comment' %>
 <% end %>
-<%= render @post.comments %> -->
