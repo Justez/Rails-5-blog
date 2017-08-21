@@ -9,8 +9,7 @@ class Show extends React.Component {
     }
 
     componentWillMount(){
-      const url = document.URL + "/comments.json";
-      fetch(url)
+      fetch(`/posts/${PostsShowView.postId}/comments`)
         .then(response => response.json())
         .then(data => {
           this.setState({comments: data})
@@ -18,26 +17,30 @@ class Show extends React.Component {
     }
 
     handleSubmit(event) {
-        const url = document.URL + "/comments";
-        const body = document.getElementById('body').value;
-        const commenter = document.getElementById('commenter').value;
+        let body = {
+          comment: {
+            body: document.getElementById('body').value,
+            commenter: document.getElementById('commenter').value
+          }
+        }
+
         event.preventDefault()
 
-        fetch(url, {
+        fetch(`/posts/${PostsShowView.postId}/comments`, {
             method: 'POST',
-            headers: {'Content-Type':'application/x-www-form-urlencoded'}, // this line is important, if this content-type is not set it wont work
-            body: 'comment[body]='.concat(body,'&comment[commenter]',commenter)
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body).replace(/"(.+)":/g, '"$1":')
           })
-          .then(function (response) {
-            console.log('Request succeeded with JSON response', response);
-          });
-
-        console.log("submitted")
-        this.setState({comments: this.state.comments.concat(document.getElementById('body').value)})
+          .then(response => response.json())
+          .then(data => {
+            this.setState({comments: this.state.comments.concat(data)})
+          })
     }
 
     render() {
-      const link =  document.URL + "/comments"
         return (
             <div>
               <div>
