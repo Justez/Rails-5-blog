@@ -6,30 +6,22 @@ class Show extends React.Component {
       this.state = {
         comments: []
       }
-
-      this.getComments()
     }
 
-    getComments(){
+    componentWillMount(){
       const url = document.URL + "/comments.json";
       fetch(url)
-        .then((response) => response.json()) // Transform the data into json
-        .then(function(data) {
-          {
-            var elements = [];
-            data.forEach(
-              function(obj, index, value){
-                elements = elements.concat(obj);
-              }
-            )
-            console.log(elements);
-          }
+        .then(response => response.json()) // Transform the data into json
+        .then(data => {
+
+          this.setState({comments: data})
+          //console.log(data)
         })
     }
 
     handleSubmit(event) {
         event.preventDefault()
-
+        
         console.log("submitted")
         this.setState({comments: this.state.comments.concat(document.getElementById('comment').value)})
     }
@@ -41,7 +33,7 @@ class Show extends React.Component {
                 {this.state.comments.map((comment, index) => {
                     return (
                         <div className = "card col-md-10 offset-md-1 col-lg-10 offset-lg-1 text-xs-center" key={index}>
-                          {comment}
+                          {comment.body}
                         </div>
                     )
                 })}
