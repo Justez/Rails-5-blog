@@ -3,10 +3,21 @@ import React from 'react'
 class Show extends React.Component {
     constructor(props) {
       super(props)
-
       this.state = {
-          comments: []
+          comments: ['aaa']
       }
+
+      this.getComments()
+    }
+
+    getComments(){
+      const url = document.URL + "/comments.json";
+      fetch(url)
+        .then((resp) => resp.json()) // Transform the data into json
+        .then(function(data) {
+          // Create and append the li's to the ul
+          console.log(JSON.stringify(data))
+          })
     }
 
     handleSubmit(event) {

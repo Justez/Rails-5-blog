@@ -28,7 +28,11 @@
 <br>
 
 <%= render 'comment' %>
+<div id="comments"></div>
 
+<%= render @post.comments %>
+
+<%= render 'comments/form', post: @post %>
 <!-- <% if user_signed_in? %>
   <%= render 'comments/form', post: @post %>
 <% end %>
