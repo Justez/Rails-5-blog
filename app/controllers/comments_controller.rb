@@ -1,10 +1,20 @@
 class CommentsController < ApplicationController
-  skip_before_action :verify_authenticity_token
   before_action :set_post, only: [:index, :show, :create, :destroy]
 
   def index
     @comments = @post.comments.all
-    render json: @comments
+    commentArray = []
+    @comments.each do |item|
+      commentArray.push(
+          body: item.body,
+          commenter: {
+            user_id: item.commenter,
+            user_email: User.select(:email).find(item.commenter).email
+          },
+          date: item.created_at.strftime('%-H:%-M:%-S %-b %-d, %Y')
+      )
+    end
+    render json: commentArray
   end
 
   def create
@@ -13,19 +23,30 @@ class CommentsController < ApplicationController
   end
 
   def show
-      @comment = @post.comments.all
-      render json: @comment
+      @comment = @post.comments.find(params[:id])
+      render json: [{
+        body: @comment.body,
+        commenter: {
+          user_id: @comment.commenter,
+          user_email: User.select(:email).find(@comment.commenter).email
+        }},
+        {
+          body: @comment.body,
+          commenter: {
+            user_id: @comment.commenter,
+            user_email: User.select(:email).find(@comment.commenter).email
+        }
+      }]
   end
 
   def destroy
       @comment = @post.comments.find(params[:id])
       @comment.destroy
-      render json: @comment
   end
 
   private
   def comment_params
-    params.require(:comment).permit(:body).merge(commenter: '1')
+    params.require(:comment).permit(:commenter, :body)
   end
 
   def set_post

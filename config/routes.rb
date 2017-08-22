@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   root to: 'posts#index'
 
   get 'about' => 'pages#about', as: :about
-
+  post 'commenter/:id' => 'pages#commenter', as: :commenter
   resources :posts do
     resources :comments
   end
