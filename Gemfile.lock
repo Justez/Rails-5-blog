@@ -80,7 +80,7 @@ GEM
       warden (~> 1.2.3)
     erubi (1.6.1)
     execjs (2.7.0)
-    faraday (0.13.0)
+    faraday (0.13.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.18)
     friendly_id (5.1.0)
@@ -128,7 +128,7 @@ GEM
       thor
       toml
     public_suffix (2.0.5)
-    puma (3.9.1)
+    puma (3.10.0)
     rack (2.0.3)
     rack-test (0.6.3)
       rack (>= 1.0)
