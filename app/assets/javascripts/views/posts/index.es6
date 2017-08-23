@@ -1,9 +1,9 @@
-import PostsShowView from './Show'
+import showPost from './show'
 import PostsEditView from './Edit'
-import PostsNewView from './New'
+import PostsNewView  from './New'
 
 export default {
-  PostsShowView,
+  ...showPost,
   PostsEditView,
   PostsNewView
 }
