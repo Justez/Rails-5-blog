@@ -1,5 +1,5 @@
 import React from 'react';
-import Comment from './Comment'
+import Comment from './components/Comment'
 
 class Show extends React.Component {
     constructor(props) {
