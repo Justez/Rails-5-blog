@@ -20,8 +20,12 @@ class Show extends React.Component {
         })
     }
 
+    handleEdit() {
+      window.location.href = `/posts/${PostsShowView.postId}/edit`;
+    }
+
     handleBack() {
-      document.location.href = '/posts'
+      window.location.href = '/posts';
     }
 
     handleDelete() {
@@ -41,7 +45,12 @@ class Show extends React.Component {
           credentials : "same-origin",
           body: JSON.stringify(body).replace(/"(.+)":/g, '"$1":')
         })
-        document.location.href = '/posts'
+        .then(response => {
+            if (response.ok) {
+              window.location.href = '/posts'
+            }
+          }
+        )
     }
 
     render() {
@@ -78,7 +87,7 @@ class Show extends React.Component {
               </div>
             </div>
             <br />
-            <button type="button" className="btn btn-outline-info" onClick={() => this.handleBack()}> {'<<'} Back To All Posts</button>
+            <button className="btn btn-outline-info" onClick={() => this.handleBack()}> {'<<'} Back To All Posts</button>
             <br />
             <br />
             <Comment />

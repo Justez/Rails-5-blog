@@ -20,26 +20,26 @@ class Comment extends React.Component {
 
     handleSubmit(event) {
       const url = `/posts/${PostsShowView.postId}/comments/`
-        let body = {
-          comment: {
-            body: document.getElementById('body').value,
-            commenter: App.State.User.id
-          }
+      let body = {
+        comment: {
+          body: document.getElementById('body').value,
+          commenter: App.State.User.id
         }
-        event.preventDefault()
-        fetch(url, {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            credentials : "same-origin",
-            body: JSON.stringify(body).replace(/"(.+)":/g, '"$1":')
-          })
-          .then(response => response.json())
-          .then(data => {
-            this.setState({comments: this.state.comments.concat(data)})
-          })
+      }
+      event.preventDefault()
+      fetch(url, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          credentials : "same-origin",
+          body: JSON.stringify(body).replace(/"(.+)":/g, '"$1":')
+        })
+        .then(response => response.json())
+        .then(data => {
+          this.setState({comments: this.state.comments.concat(data)})
+        })
     }
 
     handleDelete(id) {
