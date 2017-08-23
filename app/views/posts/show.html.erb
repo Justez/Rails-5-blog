@@ -1,16 +1,10 @@
 <%= provide(:page_title, @post.title) %>
-<%= provide(:blog_active, 'active') %>
+<%= provide(:blog_active, 'active')   %>
 
 <div id='show'></div>
-<br>
-
- <% if user_signed_in? %>
-  <%= render 'comment' %>
-<% end %>
 
 <script>
   var PostsShowView = {
-    postId: "<%= params[:id] %>",
-    userId: "<%= current_user.id %>"
+    postId: "<%= params[:id] %>"
   }
 </script>

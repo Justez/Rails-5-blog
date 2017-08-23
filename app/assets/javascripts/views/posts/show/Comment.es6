@@ -65,7 +65,7 @@ class Comment extends React.Component {
 
     render() {
         return (
-            <div className = "col-md-10 offset-md-1 col-lg-10 offset-lg-1 text-xs-center">
+            <div className = "">
                 {this.state.comments.map((comment, index) => {
                     return (
                       <div key={index} id = "comments">
@@ -102,6 +102,4 @@ class Comment extends React.Component {
       }
 }
 
-export default () => {
-    App.ReactRender(<Comment />, 'comments')
-}
+export default Comment
