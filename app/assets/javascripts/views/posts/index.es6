@@ -1,6 +1,6 @@
-import PostsShowView from './comment'
-import PostsEditView from './edit'
-import PostsNewView from './new'
+import PostsShowView from './Show'
+import PostsEditView from './Edit'
+import PostsNewView from './New'
 
 export default {
   PostsShowView,

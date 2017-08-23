@@ -6,6 +6,7 @@ class CommentsController < ApplicationController
     commentArray = []
     @comments.each do |item|
       commentArray.push(
+          id: item.id,
           body: item.body,
           commenter: {
             user_id: item.commenter,
@@ -19,24 +20,21 @@ class CommentsController < ApplicationController
 
   def create
       @comment = @post.comments.create(comment_params)
-      render json: @comment
-  end
-
-  def show
-      @comment = @post.comments.find(params[:id])
       render json: [{
+        id: @comment.id,
         body: @comment.body,
         commenter: {
           user_id: @comment.commenter,
           user_email: User.select(:email).find(@comment.commenter).email
-        }},
-        {
-          body: @comment.body,
-          commenter: {
-            user_id: @comment.commenter,
-            user_email: User.select(:email).find(@comment.commenter).email
-        }
-      }]
+        },
+        date: @comment.created_at.strftime('%-H:%-M:%-S %-b %-d, %Y')
+        }]
+
+  end
+
+  def show
+      @comment = @post.comments.find(params[:id])
+      render json: @comment
   end
 
   def destroy

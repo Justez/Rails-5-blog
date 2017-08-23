@@ -1,6 +1,6 @@
 import React from 'react'
 
-class NavBar extends React.Component {
+class Comment extends React.Component {
     constructor(props) {
       super(props)
       this.handleDelete = this.handleDelete.bind(this)
@@ -19,30 +19,31 @@ class NavBar extends React.Component {
     }
 
     handleSubmit(event) {
-      const url = `/posts/${PostsShowView.postId}/comments`
-      let body = {
-        comment: {
-          body: document.getElementById('body').value
+      const url = `/posts/${PostsShowView.postId}/comments/`
+        let body = {
+          comment: {
+            body: document.getElementById('body').value,
+            commenter: App.State.User.id
+          }
         }
-      }
-      event.preventDefault()
-
-      fetch(url, {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(body).replace(/"(.+)":/g, '"$1":')
-        })
-        .then(response => response.json())
-        .then(data => {
-          this.setState({comments: this.state.comments.concat(data)})
-        })
+        event.preventDefault()
+        fetch(url, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            credentials : "same-origin",
+            body: JSON.stringify(body).replace(/"(.+)":/g, '"$1":')
+          })
+          .then(response => response.json())
+          .then(data => {
+            this.setState({comments: this.state.comments.concat(data)})
+          })
     }
 
     handleDelete(id) {
-      const url = `/posts/${PostsShowView.postId}/comments/`+id
+      const url = `/posts/${PostsShowView.postId}/comments/`+id;
       let body = {
         comment: {
           id: id
@@ -54,6 +55,7 @@ class NavBar extends React.Component {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
+          credentials : "same-origin",
           body: JSON.stringify(body).replace(/"(.+)":/g, '"$1":')
         })
         let data = this.state.comments;
@@ -69,16 +71,15 @@ class NavBar extends React.Component {
                       <div key={index} id = "comments">
                         <div className = "card" >
                           <div className="card-header">
-                            {comment.commenter}
+                            {comment.commenter.user_email}
                           </div>
                           <div className="card-block">
                             <blockquote className="card-blockquote">
                               <p>{comment.body}</p>
-                              <footer>Created at: <i>{comment.created_at}</i></footer>
+                              <footer>Created at: <i>{comment.date}</i></footer>
                             </blockquote>
                           </div>
-                          {(comment.commenter == PostsShowView.userId) && <a id="comment_id" onClick={() => this.handleDelete(comment.id)} className="btn btn-secondary">Delete</a>}
-                          {!(comment.commenter == PostsShowView.userId) && <a id="comment_id" onClick={() => this.handleDelete(comment.id)} className="btn btn-secondary">Delete</a>}
+                          {(comment.commenter.user_id == PostsShowView.userId) && <a id="comment_id" onClick={() => this.handleDelete(comment.id)} className="btn btn-secondary">Delete</a>}
                         </div>
                         <br/>
                       </div>
@@ -102,5 +103,5 @@ class NavBar extends React.Component {
 }
 
 export default () => {
-    App.ReactRender(<NavBar />, 'navBar')
+    App.ReactRender(<Comment />, 'comments')
 }
