@@ -2,34 +2,29 @@ class CommentsController < ApplicationController
   before_action :set_post, only: [:index, :show, :create, :destroy]
 
   def index
-    @comments = @post.comments.all
+    @comments = @post.comments.most_recent
     commentArray = []
     @comments.each do |item|
       commentArray.push(
           id: item.id,
           body: item.body,
-          commenter: {
-            user_id: item.commenter,
-            user_email: User.select(:email).find(item.commenter).email
-          },
-          date: item.created_at.strftime('%-H:%-M:%-S %-b %-d, %Y')
+          created_at: item.created_date,
+          commenter_id: item.user_id,
+          commenter: User.select(:email).find(item.user_id).email
       )
     end
     render json: commentArray
   end
 
   def create
-      @comment = @post.comments.create(comment_params)
-      render json: [{
+    @comment = current_user.comments.create(comment_params.merge(post_id: params[:post_id]))
+    render json: {
         id: @comment.id,
         body: @comment.body,
-        commenter: {
-          user_id: @comment.commenter,
-          user_email: User.select(:email).find(@comment.commenter).email
-        },
-        date: @comment.created_at.strftime('%-H:%-M:%-S %-b %-d, %Y')
-        }]
-
+        created_at: @comment.created_date,
+        commenter_id: @comment.user_id,
+        commenter: User.select(:email).find(@comment.user_id).email
+      }
   end
 
   def show
@@ -44,7 +39,7 @@ class CommentsController < ApplicationController
 
   private
   def comment_params
-    params.require(:comment).permit(:commenter, :body)
+    params.require(:comment).permit(:body)
   end
 
   def set_post

@@ -1,12 +1,12 @@
 import React from 'react';
+import CommentForm from './CommentForm'
 
 class Comment extends React.Component {
     constructor(props) {
       super(props)
       this.handleDelete = this.handleDelete.bind(this)
       this.state = {
-        comments: [],
-        inputText: ''
+        comments: []
       }
     }
 
@@ -16,58 +16,22 @@ class Comment extends React.Component {
         .then(response => response.json())
         .then(data => {
           this.setState({comments: data})
-          console.log()
-        })
-    }
-
-    handleSubmit(event) {
-      const url = `/posts/${PostsShowView.postId}/comments/`
-      let body = {
-        comment: {
-          body: document.getElementById('body').value,
-          commenter: App.State.User.id
-        }
-      }
-      event.preventDefault()
-      fetch(url, {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          credentials : "same-origin",
-          body: JSON.stringify(body).replace(/"(.+)":/g, '"$1":')
-        })
-        .then(response => response.json())
-        .then(data => {
-          this.setState({comments: this.state.comments.concat(data)})
-          this.setState({inputText: ''})
         })
     }
 
     handleDelete(id) {
       const url = `/posts/${PostsShowView.postId}/comments/`+id;
-      let body = {
-        comment: {
-          id: id
-        }
-      }
       fetch(url, {
           method: 'DELETE',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-          credentials : "same-origin",
-          body: JSON.stringify(body).replace(/"(.+)":/g, '"$1":')
+          credentials : "same-origin"
         })
         let data = this.state.comments;
         data = data.filter(el => el.id != id )
         this.setState({comments: data})
-    }
-
-    handleChange(event) {
-      this.setState({inputText: (event.target.value)})
     }
 
     render() {
@@ -75,19 +39,19 @@ class Comment extends React.Component {
             <div>
                 {this.state.comments.map((comment, index) => {
                     return (
-                      <div key={index} id = "comments">
-                        <div className = "card" >
+                      <div key={index} id="comments">
+                        <div className="card" >
                           <div className="card-header">
-                            {comment.commenter.user_email}
+                            {comment.commenter}
                           </div>
                           <div className="card-block">
                             <blockquote className="card-blockquote">
                               <p>{comment.body}</p>
-                              <footer>Created at: <i>{comment.date}</i></footer>
+                              <footer><i>{comment.created_at}</i></footer>
                             </blockquote>
                           </div>
                           {
-                            (comment.commenter.user_id == App.State.User.id) &&
+                            (comment.commenter_id == App.State.User.id) &&
                             <a
                               id="comment_id"
                               onClick={() => this.handleDelete(comment.id)}
@@ -101,28 +65,7 @@ class Comment extends React.Component {
                       </div>
                     )
                 })}
-              <form onSubmit={this.handleSubmit.bind(this)}>
-                <div className="form-group">
-                  <label>Comment</label>
-                  <input
-                    name="comment[body]"
-                    type="text"
-                    className="form-control"
-                    id="body"
-                    placeholder="comment"
-                    value={this.state.inputText}
-                    onChange={this.handleChange.bind(this)}
-                  />
-                </div>
-                <div className="form-group">
-                  <button
-                    className="btn btn-outline-primary"
-                    type="submit"
-                  >
-                    Submit
-                  </button>
-                </div>
-              </form>
+              <CommentForm onNewComment={data => this.setState({comments: this.state.comments.concat(data)})}/>
           </div>
         )
       }
