@@ -1,11 +1,12 @@
-import React from 'react'
+import React from 'react';
 
 class Comment extends React.Component {
     constructor(props) {
       super(props)
       this.handleDelete = this.handleDelete.bind(this)
       this.state = {
-        comments: []
+        comments: [],
+        inputText: ''
       }
     }
 
@@ -15,6 +16,7 @@ class Comment extends React.Component {
         .then(response => response.json())
         .then(data => {
           this.setState({comments: data})
+          console.log()
         })
     }
 
@@ -39,6 +41,7 @@ class Comment extends React.Component {
         .then(response => response.json())
         .then(data => {
           this.setState({comments: this.state.comments.concat(data)})
+          this.setState({inputText: ''})
         })
     }
 
@@ -63,6 +66,10 @@ class Comment extends React.Component {
         this.setState({comments: data})
     }
 
+    handleChange(event) {
+      this.setState({inputText: (event.target.value)})
+    }
+
     render() {
         return (
             <div>
@@ -79,25 +86,44 @@ class Comment extends React.Component {
                               <footer>Created at: <i>{comment.date}</i></footer>
                             </blockquote>
                           </div>
-                          {(comment.commenter.user_id == PostsShowView.userId) && <a id="comment_id" onClick={() => this.handleDelete(comment.id)} className="btn btn-secondary">Delete</a>}
+                          {
+                            (comment.commenter.user_id == App.State.User.id) &&
+                            <a
+                              id="comment_id"
+                              onClick={() => this.handleDelete(comment.id)}
+                              className="btn btn-secondary"
+                            >
+                              Delete
+                            </a>
+                          }
                         </div>
                         <br/>
                       </div>
                     )
                 })}
-              <br/>
-              <div>
-                <form onSubmit={this.handleSubmit.bind(this)}>
-                  <div className="form-group">
-                    <label>Comment</label>
-                    <input name="comment[body]" type="text" className="form-control" id="body" placeholder="comment" />
-                  </div>
-                  <div className="form-group">
-                    <button className="btn btn-outline-primary" type="submit">Submit</button>
-                  </div>
-                </form>
-              </div>
-            </div>
+              <form onSubmit={this.handleSubmit.bind(this)}>
+                <div className="form-group">
+                  <label>Comment</label>
+                  <input
+                    name="comment[body]"
+                    type="text"
+                    className="form-control"
+                    id="body"
+                    placeholder="comment"
+                    value={this.state.inputText}
+                    onChange={this.handleChange.bind(this)}
+                  />
+                </div>
+                <div className="form-group">
+                  <button
+                    className="btn btn-outline-primary"
+                    type="submit"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </form>
+          </div>
         )
       }
 }

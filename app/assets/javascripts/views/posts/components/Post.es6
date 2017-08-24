@@ -12,10 +12,6 @@ class Post extends React.Component {
       window.location.href = `/posts/${this.props.id}/edit`;
     }
 
-    handleDelete() {
-      //Destroy(`/posts/${this.props.id}`, '/posts')
-    }
-
     componentWillMount() {
       if (this.props.id) {
         const url = `/posts/${this.props.id}.json`
@@ -36,7 +32,7 @@ class Post extends React.Component {
             <div className="col-sm-6 col-lg-4">
               <div className="card">
                 <div className="card-block">
-                  <h3 className="card-title">{this.state.post.title}</h3>
+                  <h3 className="card-title">{this.props.id} {this.state.post.title}</h3>
                   <p className="card-subtitle mb-2 text-muted">{this.state.post.created_at}</p>
                   <p className="card-text">{this.state.post.description}</p>
                     <a className="btn btn-outline-primary" href={'/posts/'+this.props.id}>Read</a>
