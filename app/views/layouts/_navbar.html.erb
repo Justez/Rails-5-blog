@@ -1,25 +1,25 @@
-<nav class="navbar navbar-toggleable-md  navbar-inverse bg-inverse"> <!--navbar-toggleable-primary for mobile-->
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <%= link_to 'Brand', root_path, class: "navbar-brand #{yield(:blog_active)}" %>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Blog</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <%= link_to 'Posts', posts_path, class: "nav-link #{yield(:blog_active)}" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'About', about_path, class: "nav-link #{yield(:about_active)}" %>
+      </li>
+      <% if user_signed_in? %>
         <li class="nav-item">
-          <%= link_to 'Posts', posts_path, class: "nav-link #{yield(:blog_active)}" %>
+          <%= link_to('Logout', destroy_user_session_path, class: "nav-link", method: :delete)%>
         </li>
+      <% else %>
         <li class="nav-item">
-          <%= link_to 'About', about_path, class: "nav-link #{yield(:about_active)}" %>
+          <%= link_to 'Login', '/users/sign_in', class: "nav-link #{yield(:login_active)}" %>
         </li>
-        <% if user_signed_in? %>
-          <li class="nav-item">
-            <%= link_to('Logout', destroy_user_session_path, class: "nav-link", method: :delete)%>
-          </li>
-        <% else %>
-          <li class="nav-item">
-            <%= link_to 'Login', '/users/sign_in', class: "nav-link #{yield(:login_active)}" %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
+      <% end %>
+    </ul>
+  </div>
 </nav>

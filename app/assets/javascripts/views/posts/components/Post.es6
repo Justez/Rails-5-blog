@@ -1,4 +1,5 @@
 import React from 'react'
+import Destroy from '../../../components/Destroy'
 
 class Post extends React.Component {
     constructor(props) {
@@ -31,23 +32,25 @@ class Post extends React.Component {
           return (
             <div className="col-sm-6 col-lg-4">
               <div className="card">
-                <div className="card-block">
+                <div className="card-body">
                   <h3 className="card-title">{this.props.id} {this.state.post.title}</h3>
                   <p className="card-subtitle mb-2 text-muted">{this.state.post.created_at}</p>
-                  <p className="card-text">{this.state.post.description}</p>
-                    <a className="btn btn-outline-primary" href={'/posts/'+this.props.id}>Read</a>
-                    {!(App.State.User == undefined) &&
-                      <a id="post_edit" onClick={() => this.handleEdit()} className="btn btn-outline-primary">Edit</a>
-                    }
-                    {!(App.State.User == undefined) &&
-                      <a
-                        id={this.props.id}
-                        onClick={this.props.handler}
-                        className="btn btn-outline-danger"
-                      >
-                        Delete
-                      </a>
-                    }
+                  {!(this.state.post.description == undefined) &&
+                    <p className="card-text">{this.state.post.description.substring(0, 200)}</p>
+                  }
+                  <a className="btn btn-outline-primary" href={'/posts/'+this.props.id}>Read</a>
+                  {!(App.State.User == undefined) &&
+                    <a id="post_edit" onClick={() => this.handleEdit()} className="btn btn-outline-primary">Edit</a>
+                  }
+                  {!(App.State.User == undefined) &&
+                    <a
+                      id={this.props.id}
+                      onClick={this.props.handler}
+                      className="btn btn-outline-danger"
+                    >
+                      Delete
+                    </a>
+                  }
                 </div>
               </div>
               <br/>
@@ -56,11 +59,11 @@ class Post extends React.Component {
       } else {
           return (
             <div className = "card">
-              <div className="card-block">
+              <div className="card-body">
                 <h4 className="card-title">{this.state.post.title}</h4>
                 <h6 className="card-subtitle mb-2 text-muted">{this.state.post.created_at}</h6>
                 <p className="card-text">{this.state.post.body}</p>
-                {!(App.State.User == undefined) &&
+                {(!(App.State.User == undefined) && !(this.state.post.description == undefined)) &&
                   <p className="card-text">
                     <strong>Description: </strong>
                     {this.state.post.description}

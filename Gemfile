@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'tether-rails'
-gem 'bootstrap', '4.0.0.alpha3'
+gem 'bootstrap', '~> 4.0.0.beta'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'jquery-rails'
 gem 'popper'

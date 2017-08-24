@@ -44,10 +44,10 @@ class Comment extends React.Component {
                           <div className="card-header">
                             {comment.commenter}
                           </div>
-                          <div className="card-block">
-                            <blockquote className="card-blockquote">
+                          <div className="card-body">
+                            <blockquote className="card-text">
                               <p>{comment.body}</p>
-                              <footer><i>{comment.created_at}</i></footer>
+                              <footer className="blockquote-footer"><i>{comment.created_at}</i></footer>
                             </blockquote>
                           </div>
                           {
@@ -55,7 +55,7 @@ class Comment extends React.Component {
                             <a
                               id="comment_id"
                               onClick={() => this.handleDelete(comment.id)}
-                              className="btn btn-secondary"
+                              className="btn btn-outline-secondary"
                             >
                               Delete
                             </a>
