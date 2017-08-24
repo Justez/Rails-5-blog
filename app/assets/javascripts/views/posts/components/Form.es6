@@ -68,10 +68,7 @@ class Form extends React.Component {
         credentials : "same-origin",
         body: JSON.stringify(body).replace(/"(.+)":/g, '"$1":')
       })
-      .then(response => {
-        if (PostsFormView.post.id) {
-          window.location.href = `/posts/`+PostsFormView.post.id
-        }
+      .then(response => { resonse.json()
       })
     }
 
@@ -91,12 +88,14 @@ class Form extends React.Component {
               <textarea id="description" className="form-control" rows="3" value={this.state.description} onChange={this.handleChangeDescription}></textarea>
             </div>
             <button type="submit" className="btn btn-outline-success">Save and show</button>
-            <a
-              className="btn btn-outline-danger"
-              onClick={() => Destroy(`/posts/${this.props.update}`, '/posts')}
-            >
-              Delete
-            </a>
+            {(this.props.update) && 
+              <a
+                className="btn btn-outline-danger"
+                onClick={() => Destroy(`/posts/${this.props.update}`, '/posts')}
+              >
+                Delete
+              </a>
+            }
           </form>
         )
       }

@@ -1,4 +1,4 @@
-export const Destroy = (url, returnUrl) => {
+export default (url, returnUrl) => {
   return (
     fetch(url, {
         method: 'DELETE',

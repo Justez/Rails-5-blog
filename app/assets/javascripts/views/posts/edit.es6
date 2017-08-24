@@ -6,17 +6,6 @@ class Edit extends React.Component {
       super(props)
     }
 
-    handleBack() {
-      console.log('back');
-      window.location.href = '/posts';
-    }
-
-    handleToPost() {
-      console.log('back to post');
-      const url = `/posts/${PostsFormView.post.id}`
-      window.location.href = url;
-    }
-
     render() {
         return (
           <div className = "col-md-10 offset-md-1 col-lg-10 offset-lg-1 text-xs-center">
@@ -25,8 +14,8 @@ class Edit extends React.Component {
 
             <br/>
 
-            <button className="btn btn-outline-info" onClick={() => this.handleToPost()}> Back To Post</button>
-            <button className="btn btn-outline-info" onClick={() => this.handleBack()}> {'<<'} Back To All Posts</button>
+            <a href={"/posts/"+PostsFormView.post.id} className="btn btn-outline-info">Show Post</a>
+            <a href="/posts" className="btn btn-outline-info"> {'<<'} Back To All Posts</a >
             <br />
           </div>
         )
