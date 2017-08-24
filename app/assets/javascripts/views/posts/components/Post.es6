@@ -1,5 +1,4 @@
 import React from 'react'
-import Destroy from '../../../components/Destroy'
 
 class Post extends React.Component {
     constructor(props) {
@@ -11,6 +10,10 @@ class Post extends React.Component {
 
     handleEdit() {
       window.location.href = `/posts/${this.props.id}/edit`;
+    }
+
+    handleDelete() {
+      //Destroy(`/posts/${this.props.id}`, '/posts')
     }
 
     componentWillMount() {
@@ -34,7 +37,7 @@ class Post extends React.Component {
               <div className="card">
                 <div className="card-block">
                   <h3 className="card-title">{this.state.post.title}</h3>
-                  <p className="card-subtitle mb-2 text-muted">{this.state.post.display_published_date}</p>
+                  <p className="card-subtitle mb-2 text-muted">{this.state.post.created_at}</p>
                   <p className="card-text">{this.state.post.description}</p>
                     <a className="btn btn-outline-primary" href={'/posts/'+this.props.id}>Read</a>
                     {!(App.State.User == undefined) &&
@@ -42,8 +45,8 @@ class Post extends React.Component {
                     }
                     {!(App.State.User == undefined) &&
                       <a
-                        id="post_delete"
-                        onClick={() => Destroy(`/posts/${this.props.id}`, '/posts')}
+                        id={this.props.id}
+                        onClick={this.props.handler}
                         className="btn btn-outline-danger"
                       >
                         Delete
@@ -68,13 +71,13 @@ class Post extends React.Component {
                   </p>
                 }
                 {!(App.State.User == undefined) &&
-                  <p className="card-text">
-                    <strong>Slug: </strong>
-                    {this.state.post.slug}
-                  </p>
-                }
-                {!(App.State.User == undefined) &&
-                  <a id="post_edit" onClick={() => this.handleEdit()} className="btn btn-outline-primary">Edit</a>
+                  <a
+                    id="post_edit"
+                    onClick={() => this.handleEdit()}
+                    className="btn btn-outline-primary"
+                  >
+                    Edit
+                  </a>
                 }
                 {!(App.State.User == undefined) &&
                   <a

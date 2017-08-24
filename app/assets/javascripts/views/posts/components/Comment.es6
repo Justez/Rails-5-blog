@@ -65,7 +65,7 @@ class Comment extends React.Component {
 
     render() {
         return (
-            <div className = "">
+            <div>
                 {this.state.comments.map((comment, index) => {
                     return (
                       <div key={index} id = "comments">

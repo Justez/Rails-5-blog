@@ -5,12 +5,23 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     @posts = Post.most_recent
-    # render json: @posts
   end
 
   # GET /posts/1
   # GET /posts/1.json
   def show
+    respond_to do |format|
+      format.html {}
+      format.json {
+        render json: {
+          id: @post.id,
+          title: @post.title,
+          body: @post.body,
+          description: @post.description,
+          created_at: @post.display_published_date
+        }
+      }
+    end
   end
 
   # GET /posts/new
@@ -27,7 +38,13 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.save
-    render json: @post
+    respond_to do |format|
+      format.json {
+        render json: {
+          id: @post.id
+        }
+      }
+    end
   end
 
   # PATCH/PUT /posts/1

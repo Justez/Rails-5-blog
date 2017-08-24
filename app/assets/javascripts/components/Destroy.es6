@@ -9,7 +9,7 @@ export default (url, returnUrl) => {
         credentials : "same-origin"
       })
       .then(response => {
-        if (response.ok) {
+        if (response.ok && returnUrl) {
           window.location.href = returnUrl;
         }
       }
