@@ -1,8 +1,10 @@
 import React from 'react';
 import Post from './components/Post'
 import Destroy from '../../components/Destroy'
+import {connect} from 'react-redux'
 
 class Main extends React.Component {
+
     constructor(props) {
       super(props)
       this.handler = this.handler.bind(this)
@@ -19,6 +21,10 @@ class Main extends React.Component {
       })
     }
 
+    componentWillUnmount() {
+
+    }
+
     handler(event) {
       event.preventDefault()
       Destroy(`/posts/${event.target.id}`)
@@ -28,6 +34,7 @@ class Main extends React.Component {
     }
 
     render() {
+      console.log(this.props.dimensions);
       if (this.state.post_id[0]==undefined) {
         return (
             <div className = "col-md-10 offset-md-1 col-lg-10 offset-lg-1 text-xs-center">
@@ -41,7 +48,7 @@ class Main extends React.Component {
               <h1>Posts</h1>
               <div className='row'>
                 {
-                  this.state.post_id.map((item, index) => <Post handler={this.handler} key={index} display={'index'} id={item} />)
+                  this.state.post_id.map((item, index) =><Post key={index} handler={this.handler} display={'index'} id={item} />)
                 }
               </div>
               <a className="btn btn-primary" href="/posts/new">New Post</a>
@@ -51,7 +58,14 @@ class Main extends React.Component {
       }
 
 }
+const mapStateToProps = state => {
+  return {
+    dimensions: state.app.dimensions
+  }
+}
+
+const MainView = connect(mapStateToProps)(Main)
 
 export default () => {
-    App.ReactRender(<Main />, 'main')
+    App.ReactRender(<MainView />)
 }

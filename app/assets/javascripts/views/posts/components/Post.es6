@@ -1,11 +1,12 @@
 import React from 'react'
 import Destroy from '../../../components/Destroy'
 
-class Post extends React.Component {
+export default class Post extends React.Component {
     constructor(props) {
       super(props)
       this.state = {
-        post: []
+        post: [],
+        display: 'block'
       }
     }
 
@@ -33,6 +34,11 @@ class Post extends React.Component {
             <div className="card-body">
               <h3 className="card-title">{this.props.id} {this.state.post.title}</h3>
               <p className="card-subtitle mb-2 text-muted">{this.state.post.created_at}</p>
+              {this.props.display=='show' &&
+                <p className="card-text">
+                  {this.state.post.body}
+                </p>
+              }
               {(!(App.State.User == undefined) && !(this.state.post.description == undefined)) &&
                 <p className="card-text">
                   <strong>Description: </strong>
@@ -69,9 +75,8 @@ class Post extends React.Component {
               }
             </div>
           </div>
+          < br />
         </div>
         )
       }
 }
-
-export default Post

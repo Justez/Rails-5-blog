@@ -1,12 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import * as ViewsTree from './views/index'
+import { Provider } from 'react-redux'
+import { updateWindowDimensions } from './actions/app'
+import configureStore from './store/configureStore'
 import 'whatwg-fetch'
+
+App.Store = configureStore()
 
 App.ReactRender = (component, container='root') => {
  if (document.getElementById(container)) {
    ReactDOM.render(
-     component,
+     <Provider store={App.Store}>{component}</Provider>,
      document.getElementById(container)
    )
  } else {
@@ -15,7 +20,6 @@ App.ReactRender = (component, container='root') => {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log(ViewsTree)
   const dataset = document.getElementsByTagName('body')[0].dataset
   const controllerParts = dataset.controller.split('/')
 
@@ -47,4 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     console.log('No view found for: ' + viewName)
   }
+
 })
+
+window.onresize = () => {
+  App.Store.dispatch(updateWindowDimensions())
+}
