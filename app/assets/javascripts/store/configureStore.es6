@@ -17,7 +17,6 @@ export default () => {
       reducer,
       applyMiddleware(thunk, promise, logger)
     )
-
     return store
   } else {
     const store = createStore(

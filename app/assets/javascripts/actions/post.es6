@@ -1,14 +1,14 @@
-export function fetchPosts() {
-  return {
-    type: 'SHOW_ALL',
-    posts: {
-      id: 1,
-      title: 'test',
-      created_at: '2017-01-01',
-      description: 'description'
-    }
+export const fetchPosts = () => ({
+  type: 'SHOW_ALL',
+  posts: {
+    id: 1,
+    title: 'test',
+    created_at: '2017-01-01',
+    description: 'description',
+    text: 'text'
   }
-}
+})
+
 // export function fetchPosts() {
 //   return function(dispatch) {
 //     axios.get('url')

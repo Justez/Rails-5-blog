@@ -1,4 +1,4 @@
-import posts from './postReducer'
+import posts from './post'
 import app from './app'
 
 export default {
