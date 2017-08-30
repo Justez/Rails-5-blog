@@ -20,21 +20,17 @@ class Main extends React.Component {
   }
 
   deletePost(index){
-    let data = []
-    this.props.posts.map((item, indexValue) => {
-      if (!(index == indexValue)) {
-        data.push(item)
-      }
-    })
-    App.Store.dispatch(deletePost(data))
+    App.Store.dispatch(deletePost(index))
     Destroy('/posts/'+this.props.posts[index].id, '')
   }
 
   render() {
+    console.log(this.props.posts);
     if (this.props.posts[0]==undefined) {
       return (
           <div className = "col-md-10 offset-md-1 col-lg-10 offset-lg-1 text-xs-center">
             <h1>Posts</h1>
+            <p className="alert alert-info" role="alert">There are no posts available...</p>
             <a className="btn btn-primary" href="/posts/new">New Post</a>
           </div>
         )

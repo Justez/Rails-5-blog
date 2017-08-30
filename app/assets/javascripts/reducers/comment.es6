@@ -1,40 +1,42 @@
 const initialState = {
-  posts: {
+  comments: {
     id: -1,
-    title: '',
-    description: '',
+    body: '',
     created_at: '',
-    text: ''
+    commenter_id: -1,
+    commenter: ''
   }
 }
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case 'SHOW_ALL':
+    case 'SHOW_ALL_FOR_PAGE':
       {
         return {
           ...state,
-          posts: action.posts
+          comments: action.comments
         }
     }
-    case 'SHOW_ONE':
+    case 'ADD_ONE':
       {
+        let data = state.comments.concat(action.comment)
+        console.log(data)
         return {
           ...state,
-          posts: action.posts
+          comments: state.comments
         }
     }
     case 'DELETE_ONE':
       {
         let data = []
-        state.posts.map((item, indexValue) => {
+        state.comments.map((item, indexValue) => {
           if (!(action.index == indexValue)) {
             data.push(item)
           }
         })
         return {
           ...state,
-          posts: data
+          comments: data
         }
     }
     default:
