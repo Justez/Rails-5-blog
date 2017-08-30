@@ -5,6 +5,22 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     @posts = Post.most_recent
+    postArray = []
+    @posts.each do |item|
+      postArray.push(
+          id: item.id,
+          title: item.title,
+          body: item.body,
+          created_at: item.display_published_date,
+          description: item.description
+      )
+    end
+    respond_to do |format|
+      format.html {}
+      format.json {
+        render json: postArray
+      }
+    end
   end
 
   # GET /posts/1

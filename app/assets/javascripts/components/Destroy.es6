@@ -7,12 +7,12 @@ export default (url, returnUrl) => {
           'Content-Type': 'application/json'
         },
         credentials : "same-origin"
-      })
-      .then(response => {
-        if (response.ok && returnUrl) {
-          window.location.href = returnUrl;
-        }
       }
     )
+    .then(response => {
+      if (response.ok && returnUrl) {
+        window.location.href = returnUrl;
+      }
+    })
   )
 }

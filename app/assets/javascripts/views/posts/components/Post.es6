@@ -38,7 +38,19 @@ export default class Post extends React.Component {
                   {this.state.post.body}
                 </p>
               }
-              {(!(App.State.User == undefined) && !(this.state.post.description == undefined)) &&
+              {(this.props.display=='index') && !(this.state.post.description == undefined) &&
+                <p className="card-text">
+                  <strong>Description: </strong>
+                  {this.state.post.description.substring(0, 200)}
+                </p>
+              }
+              {
+                (
+                  !(App.State.User == undefined)
+                  && !(this.state.post.description == undefined)
+                  && (this.props.display=='show')
+                )
+                  &&
                 <p className="card-text">
                   <strong>Description: </strong>
                   {this.state.post.description.substring(0, 200)}

@@ -1,28 +1,23 @@
 const initialState = {
-  posts: {
+  posts: [{
     id: -1,
     title: '',
     description: '',
     created_at: '',
     text: ''
-  }
+  }]
 }
 
 export default function reducer(state = initialState, action) {
-  // console.log(action.posts);
   switch (action.type) {
     case 'SHOW_ALL':
+      {
+        // console.log(action)
         return {
           ...state,
-          posts: {
-            id: action.posts.id,
-            title: action.posts.title,
-            created_at: action.posts.id,
-            description: action.posts.id,
-            text: action.posts.text
-          }
+          posts: action.posts
         }
-      break;
+    }
     default:
       return state;
   }

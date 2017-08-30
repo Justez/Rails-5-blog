@@ -15,13 +15,12 @@ class Main extends React.Component {
   }
 
   componentWillMount() {
-    App.Store.dispatch(fetchPosts())
     App.Store.dispatch(updateWindowDimensions())
-    console.log(this.props.dimensions, this.props.posts);
     fetch(`/posts.json`)
     .then(response => response.json())
     .then(data => {
       this.setState({post_id: data.map(item => item.id)})
+      App.Store.dispatch(fetchPosts(data))
     })
   }
 
@@ -34,6 +33,7 @@ class Main extends React.Component {
   }
 
   render() {
+    // console.log(this.props.dimensions, this.props.posts);
     if (this.state.post_id[0]==undefined) {
       return (
           <div className = "col-md-10 offset-md-1 col-lg-10 offset-lg-1 text-xs-center">
@@ -47,9 +47,10 @@ class Main extends React.Component {
             <h1>Posts</h1>
             <div className='row'>
               {
-                this.state.post_id.map((item, index) =><Post key={index} handler={this.handler} display={'index'} id={item} />)
+                this.state.post_id.map((item, index) => <Post key={index} handler={this.handler} display={'index'} id={item} />)
               }
             </div>
+            {this.props.posts.map((item, index) => {console.log(item)})}
             <a className="btn btn-primary" href="/posts/new">New Post</a>
           </div>
         )
