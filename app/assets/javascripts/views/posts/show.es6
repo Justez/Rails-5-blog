@@ -21,22 +21,33 @@ class Show extends React.Component {
   }
 
   handler(){
-    App.Store.dispatch(deletePost([]))
+    App.Store.dispatch(deletePost({}))
     Destroy(`/posts/${PostsShowView.postId}`, `/posts`)
   }
 
   render() {
-    console.log(this.props.posts);
-    return (
-      <div className = "col-md-10 offset-md-1 col-lg-10 offset-lg-1 text-xs-center">
-        <Post handler={this.handler} display={'show'} object={this.props.posts}/>
-        <br />
-        <a className="btn btn-outline-info" href="/posts"> {'<<'} Back To All Posts</a>
-        <br />
-        <br />
-        <Comment />
-      </div>
-    )
+    if (this.props.posts.id == undefined) {
+      return (
+        <div>
+          <p className="alert alert-success" role="alert"> Post deleted </p>
+        </div>
+      )
+    } else if  (!(this.props.posts == undefined ) && !(this.props.posts.id == -1)) {
+      return (
+        <div className = "col-md-10 offset-md-1 col-lg-10 offset-lg-1 text-xs-center">
+          <Post handler={this.handler} display={'show'} object={this.props.posts}/>
+          <br />
+          <a className="btn btn-outline-info" href="/posts"> {'<<'} Back To All Posts</a>
+          <br />
+          <br />
+          <Comment />
+        </div>
+      )
+    } else {
+      return (
+        <div></div>
+      )
+    }
   }
 }
 

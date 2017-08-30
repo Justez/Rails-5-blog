@@ -1,11 +1,11 @@
 const initialState = {
-  posts: [{
+  posts: {
     id: -1,
     title: '',
     description: '',
     created_at: '',
     text: ''
-  }]
+  }
 }
 
 export default function reducer(state = initialState, action) {
