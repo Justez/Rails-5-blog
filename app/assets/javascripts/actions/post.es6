@@ -9,6 +9,6 @@ export const fetchPost = (data) => ({
 })
 
 export const deletePost = (index) => ({
-  type: 'DELETE_ONE',
+  type: 'DELETE_POST',
   index: index
 })

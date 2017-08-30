@@ -7,15 +7,15 @@ class Comment extends React.Component {
   }
 
   handleDelete(id) {
-    const url = `/posts/${PostsShowView.postId}/comments/`+id;
-    fetch(url, {
-        method: 'DELETE',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        credentials : "same-origin"
-      })
+    // const url = `/posts/${PostsShowView.postId}/comments/`+id;
+    // fetch(url, {
+    //     method: 'DELETE',
+    //     headers: {
+    //       'Accept': 'application/json',
+    //       'Content-Type': 'application/json'
+    //     },
+    //     credentials : "same-origin"
+    //   })
   }
 
   render() {
@@ -45,7 +45,7 @@ class Comment extends React.Component {
                       (comment.commenter_id == (App.State.User == undefined) ? -1 : App.State.User.id) &&
                       <a
                         id="comment_id"
-                        onClick={() => this.handleDelete(comment.id)}
+                        onClick={() => this.props.onCommentDelete(index)}
                         className="btn btn-outline-secondary"
                       >
                         Delete

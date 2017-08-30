@@ -20,7 +20,6 @@ export default function reducer(state = initialState, action) {
     case 'ADD_ONE':
       {
         let data = state.comments.concat(action.comment)
-        console.log(data)
         return {
           ...state,
           comments: state.comments
@@ -28,15 +27,15 @@ export default function reducer(state = initialState, action) {
     }
     case 'DELETE_ONE':
       {
-        let data = []
+        let comments = []
         state.comments.map((item, indexValue) => {
           if (!(action.index == indexValue)) {
-            data.push(item)
+            comments.push(item)
           }
         })
         return {
           ...state,
-          comments: data
+          comments: comments
         }
     }
     default:

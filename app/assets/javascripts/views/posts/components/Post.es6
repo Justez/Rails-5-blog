@@ -13,7 +13,7 @@ export default class Post extends React.Component {
       if (!(App.State.User == undefined) && (this.props.display=='index')) {
         this.props.onDelete(this.props.keyValue)
       } else if (!(App.State.User == undefined) && (this.props.display=='show')) {
-        this.props.handler()
+        this.props.handlePostDelete()
       }
     }
 
@@ -48,7 +48,10 @@ export default class Post extends React.Component {
                     {this.props.object.description.substring(0, 200)}
                   </p>
               }
-              <a className="btn btn-outline-primary" href={'/posts/'+this.props.object.id}>Read</a>
+              {
+                (this.props.display=='index')
+                && <a className="btn btn-outline-primary" href={'/posts/'+this.props.object.id}>Read</a>
+              }
               {
                 !(App.State.User == undefined)
                 &&

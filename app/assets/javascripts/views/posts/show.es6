@@ -7,12 +7,15 @@ import { connect } from 'react-redux'
 import { fetchPost } from '../../actions/post'
 import { deletePost } from '../../actions/post'
 import { addComment } from '../../actions/comment'
+import { deleteComment } from '../../actions/comment'
 import { fetchCommentsForPage } from '../../actions/comment'
 
 class Show extends React.Component {
   constructor(props) {
     super(props)
-    this.handler = this.handler.bind(this)
+    this.handlePostDelete = this.handlePostDelete.bind(this)
+    this.handleNewComment = this.handleNewComment.bind(this)
+    this.handleCommentDelete = this.handleCommentDelete.bind(this)
   }
 
   componentWillMount() {
@@ -21,19 +24,17 @@ class Show extends React.Component {
     .then(data => {
       App.Store.dispatch(fetchPost(data))
     })
-    const url = `/posts/${PostsShowView.postId}/comments`
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        App.Store.dispatch(fetchCommentsForPage(data))
-      })
+    fetch(`/posts/${PostsShowView.postId}/comments`)
+    .then(response => response.json())
+    .then(data => {
+      App.Store.dispatch(fetchCommentsForPage(data))
+    })
   }
 
   handleNewComment(comment) {
     let body = {
       comment: {
-        body: comment,
-        post_id: PostsShowView.postId
+        body: comment
       }
     }
     fetch(`/posts/${PostsShowView.postId}/comments/`, {
@@ -47,17 +48,31 @@ class Show extends React.Component {
       })
       .then(response => response.json())
       .then(data => {
-        App.Store.dispatch(addComment(data))
+        console.log(data);
+        // App.Store.dispatch(addComment(data))
       })
   }
 
-  handler(){
-    App.Store.dispatch(deletePost({}))
+  handleCommentDelete(index) {
+    let id = this.props.comments[index].id
+    const url = `/posts/${PostsShowView.postId}/comments/`+id
+    fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        credentials : "same-origin"
+      })
+    App.Store.dispatch(deleteComment(index))
+  }
+
+  handlePostDelete(){
+    App.Store.dispatch(deletePost())
     Destroy(`/posts/${PostsShowView.postId}`, `/posts`)
   }
 
   render() {
-    console.log(this.props.comments);
     if (this.props.posts.id == undefined) {
       return (
         <div>
@@ -67,12 +82,12 @@ class Show extends React.Component {
     } else if (!(this.props.posts == undefined ) && !(this.props.posts.id == -1)) {
       return (
         <div className = "col-md-10 offset-md-1 col-lg-10 offset-lg-1 text-xs-center">
-          <Post handler={this.handler} display={'show'} object={this.props.posts}/>
+          <Post handlePostDelete={this.handlePostDelete} display={'show'} object={this.props.posts}/>
           <br />
           <a className="btn btn-outline-info" href="/posts"> {'<<'} Back To All Posts</a>
           <br />
           <br />
-          <Comment comments={this.props.comments}/>
+          <Comment comments={this.props.comments} onCommentDelete={index => this.handleCommentDelete(index)}/>
           {!(App.State.User == undefined) &&
             <CommentForm onNewComment={data => this.handleNewComment(data)}/>
           }

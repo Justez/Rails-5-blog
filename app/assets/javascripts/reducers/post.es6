@@ -24,14 +24,18 @@ export default function reducer(state = initialState, action) {
           posts: action.posts
         }
     }
-    case 'DELETE_ONE':
+    case 'DELETE_POST':
       {
         let data = []
-        state.posts.map((item, indexValue) => {
-          if (!(action.index == indexValue)) {
-            data.push(item)
-          }
-        })
+        if (!state.posts[0] == undefined) {
+          state.posts.map((item, indexValue) => {
+            if (!(action.index == indexValue)) {
+              data.push(item)
+            }
+          })
+        } else {
+          data = {}
+        }
         return {
           ...state,
           posts: data
