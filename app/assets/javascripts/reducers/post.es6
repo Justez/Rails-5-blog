@@ -12,7 +12,20 @@ export default function reducer(state = initialState, action) {
   switch (action.type) {
     case 'SHOW_ALL':
       {
-        // console.log(action)
+        return {
+          ...state,
+          posts: action.posts
+        }
+    }
+    case 'SHOW_ONE':
+      {
+        return {
+          ...state,
+          posts: action.posts
+        }
+    }
+    case 'DELETE_ONE':
+      {
         return {
           ...state,
           posts: action.posts

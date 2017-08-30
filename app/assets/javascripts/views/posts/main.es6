@@ -1,40 +1,37 @@
 import React from 'react';
 import Post from './components/Post'
-import Destroy from '../../components/Destroy'
 import { connect } from 'react-redux'
+import Destroy from '../../components/Destroy'
 import { fetchPosts } from '../../actions/post'
-import { updateWindowDimensions } from '../../actions/app'
+import { deletePost } from '../../actions/post'
 
 class Main extends React.Component {
   constructor(props) {
     super(props)
-    this.handler = this.handler.bind(this)
-    this.state = {
-      post_id: []
-    }
+    this.deletePost = this.deletePost.bind(this)
   }
 
   componentWillMount() {
-    App.Store.dispatch(updateWindowDimensions())
     fetch(`/posts.json`)
     .then(response => response.json())
     .then(data => {
-      this.setState({post_id: data.map(item => item.id)})
       App.Store.dispatch(fetchPosts(data))
     })
   }
 
-  handler(event) {
-    event.preventDefault()
-    Destroy(`/posts/${event.target.id}`)
-    let data = this.state.post_id
-    data = data.filter(el => el != event.target.id )
-    this.setState({post_id: data})
+  deletePost(index){
+    let data = []
+    this.props.posts.map((item, indexValue) => {
+      if (!(index == indexValue)) {
+        data.push(item)
+      }
+    })
+    App.Store.dispatch(deletePost(data))
+    Destroy('/posts/'+this.props.posts[index].id, '')
   }
 
   render() {
-    // console.log(this.props.dimensions, this.props.posts);
-    if (this.state.post_id[0]==undefined) {
+    if (this.props.posts[0]==undefined) {
       return (
           <div className = "col-md-10 offset-md-1 col-lg-10 offset-lg-1 text-xs-center">
             <h1>Posts</h1>
@@ -47,10 +44,19 @@ class Main extends React.Component {
             <h1>Posts</h1>
             <div className='row'>
               {
-                this.state.post_id.map((item, index) => <Post key={index} handler={this.handler} display={'index'} id={item} />)
+                this.props.posts.map(
+                  (item, index) => item.id==-1 ?
+                    '' :
+                    <Post
+                      key={index}
+                      keyValue={index}
+                      onDelete={index => this.deletePost(index)}
+                      display={'index'}
+                      object={item}
+                    />
+                  )
               }
             </div>
-            {this.props.posts.map((item, index) => {console.log(item)})}
             <a className="btn btn-primary" href="/posts/new">New Post</a>
           </div>
         )
@@ -59,8 +65,7 @@ class Main extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    posts: state.posts.posts,
-    dimensions: state.app.dimensions
+    posts: state.posts.posts
   }
 }
 

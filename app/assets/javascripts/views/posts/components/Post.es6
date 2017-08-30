@@ -1,28 +1,19 @@
 import React from 'react'
-import Destroy from '../../../components/Destroy'
 
 export default class Post extends React.Component {
     constructor(props) {
       super(props)
-      this.state = {
-        post: []
-      }
     }
 
     handleEdit() {
-      window.location.href = `/posts/${this.props.id}/edit`;
+      window.location.href = `/posts/${this.props.object.id}/edit`;
     }
 
-    componentWillMount() {
-      if (this.props.id) {
-        const url = `/posts/${this.props.id}.json`
-        fetch(url, {
-          credentials : "same-origin"
-        })
-        .then(response => response.json())
-        .then(data => {
-          this.setState({post: data})
-        })
+    handleDelete() {
+      if (!(App.State.User == undefined) && (this.props.display=='index')) {
+        this.props.onDelete(this.props.keyValue)
+      } else if (!(App.State.User == undefined) && (this.props.display=='show')) {
+        this.props.handler()
       }
     }
 
@@ -31,58 +22,51 @@ export default class Post extends React.Component {
         <div className={this.props.display=='index' ? "col-sm-6 col-lg-4" : ""}>
           <div className="card">
             <div className="card-body">
-              <h3 className="card-title">{this.props.id} {this.state.post.title}</h3>
-              <p className="card-subtitle mb-2 text-muted">{this.state.post.created_at}</p>
+              <h3 className="card-title">{this.props.object.id} {this.props.object.title}</h3>
+              <p className="card-subtitle mb-2 text-muted">{this.props.object.created_at}</p>
               {this.props.display=='show' &&
                 <p className="card-text">
-                  {this.state.post.body}
-                </p>
-              }
-              {(this.props.display=='index') && !(this.state.post.description == undefined) &&
-                <p className="card-text">
-                  <strong>Description: </strong>
-                  {this.state.post.description.substring(0, 200)}
+                  {this.props.object.body}
                 </p>
               }
               {
-                (
-                  !(App.State.User == undefined)
-                  && !(this.state.post.description == undefined)
-                  && (this.props.display=='show')
-                )
-                  &&
-                <p className="card-text">
-                  <strong>Description: </strong>
-                  {this.state.post.description.substring(0, 200)}
-                </p>
+                (this.props.display=='index')
+                && !(this.props.object.description == undefined)
+                &&
+                  <p className="card-text">
+                    <strong>Description: </strong>
+                    {this.props.object.description.substring(0, 200)}
+                  </p>
               }
-              <a className="btn btn-outline-primary" href={'/posts/'+this.props.id}>Read</a>
-              {!(App.State.User == undefined) &&
-                <a
-                  id="post_edit"
-                  onClick={() => this.handleEdit()}
-                  className="btn btn-outline-primary"
-                >
-                  Edit
-                </a>
+              {
+                !(App.State.User == undefined)
+                && !(this.props.object.description == undefined)
+                && (this.props.display=='show')
+                &&
+                  <p className="card-text">
+                    <strong>Description: </strong>
+                    {this.props.object.description.substring(0, 200)}
+                  </p>
               }
-              {(!(App.State.User == undefined) && (this.props.display=='index')) &&
-                <a
-                  id={this.props.id}
-                  onClick={this.props.handler}
-                  className="btn btn-outline-danger"
-                >
-                  Delete
-                </a>
-              }
-              {(!(App.State.User == undefined) && (this.props.display=='show')) &&
-                <a
-                  className="btn btn-outline-danger"
-                  id="post_delete"
-                  onClick={() => Destroy(`/posts/${this.props.id}`, '/posts')}
-                >
-                  Delete
-                </a>
+              <a className="btn btn-outline-primary" href={'/posts/'+this.props.object.id}>Read</a>
+              {
+                !(App.State.User == undefined)
+                &&
+                  <span>
+                    <a
+                      id="post_edit"
+                      onClick={() => this.handleEdit()}
+                      className="btn btn-outline-primary"
+                    >
+                      Edit
+                    </a>
+                    <a
+                      onClick={() => this.handleDelete()}
+                      className="btn btn-outline-danger"
+                    >
+                      Delete
+                    </a>
+                  </span>
               }
             </div>
           </div>
