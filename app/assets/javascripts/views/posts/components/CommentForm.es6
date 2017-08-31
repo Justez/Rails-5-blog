@@ -9,17 +9,20 @@ class CommentForm extends React.Component {
     }
 
     handleChange(event) {
+      event.preventDefault()
       this.setState({inputText: (event.target.value)})
     }
 
-    handleNewComment() {
+    handleSubmit(event) {
+      event.preventDefault()
       this.props.onNewComment(this.state.inputText)
+      this.setState({inputText: ('')})
     }
 
     render() {
       return (
           <div>
-            <form onSubmit={this.handleNewComment.bind(this)}>
+            <form onSubmit={this.handleSubmit.bind(this)}>
               <div className="form-group">
                 <label>Comment</label>
                 <input

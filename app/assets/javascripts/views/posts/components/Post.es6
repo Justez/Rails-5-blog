@@ -11,6 +11,7 @@ export default class Post extends React.Component {
 
     handleDelete() {
       if (!(App.State.User == undefined) && (this.props.display=='index')) {
+        // console.log('this is index delete', this.props.keyValue);
         this.props.onDelete(this.props.keyValue)
       } else if (!(App.State.User == undefined) && (this.props.display=='show')) {
         this.props.handlePostDelete()

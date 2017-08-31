@@ -3,19 +3,6 @@ import React from 'react';
 class Comment extends React.Component {
   constructor(props) {
     super(props)
-    this.handleDelete = this.handleDelete.bind(this)
-  }
-
-  handleDelete(id) {
-    // const url = `/posts/${PostsShowView.postId}/comments/`+id;
-    // fetch(url, {
-    //     method: 'DELETE',
-    //     headers: {
-    //       'Accept': 'application/json',
-    //       'Content-Type': 'application/json'
-    //     },
-    //     credentials : "same-origin"
-    //   })
   }
 
   render() {

@@ -27,7 +27,7 @@ export default function reducer(state = initialState, action) {
     case 'DELETE_POST':
       {
         let data = []
-        if (!state.posts[0] == undefined) {
+        if (!(state.posts[0] == undefined)) {
           state.posts.map((item, indexValue) => {
             if (!(action.index == indexValue)) {
               data.push(item)

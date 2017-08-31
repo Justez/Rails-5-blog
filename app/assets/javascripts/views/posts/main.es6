@@ -25,7 +25,6 @@ class Main extends React.Component {
   }
 
   render() {
-    console.log(this.props.posts);
     if (this.props.posts[0]==undefined) {
       return (
           <div className = "col-md-10 offset-md-1 col-lg-10 offset-lg-1 text-xs-center">

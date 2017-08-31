@@ -48,8 +48,7 @@ class Show extends React.Component {
       })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
-        // App.Store.dispatch(addComment(data))
+        App.Store.dispatch(addComment(data))
       })
   }
 
@@ -87,10 +86,10 @@ class Show extends React.Component {
           <a className="btn btn-outline-info" href="/posts"> {'<<'} Back To All Posts</a>
           <br />
           <br />
-          <Comment comments={this.props.comments} onCommentDelete={index => this.handleCommentDelete(index)}/>
           {!(App.State.User == undefined) &&
             <CommentForm onNewComment={data => this.handleNewComment(data)}/>
           }
+          <Comment comments={this.props.comments} onCommentDelete={index => this.handleCommentDelete(index)}/>
           {(App.State.User == undefined) &&
             <p><i>
               <a href="/users/sign_in" >Login </a>

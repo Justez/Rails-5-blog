@@ -5,7 +5,7 @@ export const fetchCommentsForPage = (data) => ({
 
 export const addComment = (comment) => ({
   type: 'ADD_ONE',
-  comment: comment
+  comments: comment
 })
 
 export const deleteComment = (index) => ({

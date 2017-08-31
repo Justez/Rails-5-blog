@@ -19,10 +19,10 @@ export default function reducer(state = initialState, action) {
     }
     case 'ADD_ONE':
       {
-        let data = state.comments.concat(action.comment)
+        let data = [action.comments].concat(state.comments)
         return {
           ...state,
-          comments: state.comments
+          comments: data
         }
     }
     case 'DELETE_ONE':
