@@ -24,6 +24,26 @@ export default function reducer(state = initialState, action) {
           posts: action.posts
         }
     }
+    case 'UPDATE_POST':
+      {
+        return {
+          ...state,
+          posts: action.posts
+        }
+    }
+    case 'CREATE_POST':
+      {
+        return {
+          ...state,
+          posts: {
+            id: action.id,
+            title: action.posts.title,
+            body: action.posts.body,
+            created_at: action.created_at,
+            description: action.posts.description
+          }
+        }
+    }
     case 'DELETE_POST':
       {
         let data = []

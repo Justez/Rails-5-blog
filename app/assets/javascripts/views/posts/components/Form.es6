@@ -9,22 +9,11 @@ class Form extends React.Component {
         body:  '',
         description: ''
       }
-
-      this.handleChangeTitle = this.handleChangeTitle.bind(this);
-      this.handleChangeDescription = this.handleChangeDescription.bind(this);
-      this.handleChangeBody = this.handleChangeBody.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentWillMount() {
-      if (this.props.update) {
-        fetch(`/posts/${this.props.update}.json`, {
-            credentials : "same-origin"
-          })
-          .then(response => response.json())
-          .then(data => {
-            this.setState({title: data.title, body: data.body, description: data.description})
-          })
+      if (this.props.originalData) {
+        this.setState({title: this.props.originalData.title, body: this.props.originalData.body, description: this.props.originalData.description})
       }
     }
 
@@ -40,66 +29,43 @@ class Form extends React.Component {
       this.setState({body: (event.target.value)})
     }
 
+    handleDelete(event) {
+      event.preventDefault()
+      this.props.onDelete()
+    }
+
     handleSubmit(event) {
-      event.preventDefault();
-
-      let url = '/posts'
-      let method = 'POST'
-
-      if (this.props.update) {
-        url = `/posts/${this.props.update}`
-        method = 'PATCH'
+      event.preventDefault()
+      if (this.props.originalData) {
+        this.props.onUpdate(this.state)
+      } else {
+        this.props.onCreate(this.state)
       }
-
-      let body = {
-        post: {
-          title: this.state.title,
-          description: this.state.description,
-          body: this.state.body
-        }
-      }
-
-      fetch(url, {
-        method,
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        credentials : "same-origin",
-        body: JSON.stringify(body).replace(/"(.+)":/g, '"$1":')
-      })
-      .then(response => {
-        if (this.props.update) {
-          window.location.href = `/posts/`+PostsFormView.post.id
-        } else {
-          window.location.href = `/posts/`
-        }
-      })
     }
 
     render() {
         return (
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.handleSubmit.bind(this)}>
             <div className="form-group">
               <label>Title</label>
-              <input className="form-control" id="title" value={this.state.title} onChange={this.handleChangeTitle}/>
+              <input className="form-control" id="title" value={this.state.title} onChange={this.handleChangeTitle.bind(this)}/>
             </div>
             <div className="form-group">
               <label>Content</label>
-              <textarea className="form-control" id="body" rows="3" value={this.state.body} onChange={this.handleChangeBody}></textarea>
+              <textarea className="form-control" id="body" rows="7" value={this.state.body} onChange={this.handleChangeBody.bind(this)}></textarea>
             </div>
             <div className="form-group">
               <label>Description</label>
-              <textarea id="description" className="form-control" rows="3" value={this.state.description} onChange={this.handleChangeDescription}></textarea>
+              <textarea id="description" className="form-control" rows="5" value={this.state.description} onChange={this.handleChangeDescription.bind(this)}></textarea>
             </div>
             <button type="submit" className="btn btn-outline-success">Save and show</button>
-            {(this.props.update) &&
-              <a
+            {(this.props.originalData) &&
+              <button
                 className="btn btn-outline-danger"
-                onClick={() => Destroy(`/posts/${this.props.update}`, '/posts')}
+                onClick={this.handleDelete.bind(this)}
               >
                 Delete
-              </a>
+              </button>
             }
           </form>
         )

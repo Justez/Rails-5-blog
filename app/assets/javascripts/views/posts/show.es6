@@ -13,7 +13,6 @@ import { fetchCommentsForPage } from '../../actions/comment'
 class Show extends React.Component {
   constructor(props) {
     super(props)
-    this.handlePostDelete = this.handlePostDelete.bind(this)
     this.handleNewComment = this.handleNewComment.bind(this)
     this.handleCommentDelete = this.handleCommentDelete.bind(this)
   }
@@ -81,7 +80,7 @@ class Show extends React.Component {
     } else if (!(this.props.posts == undefined ) && !(this.props.posts.id == -1)) {
       return (
         <div className = "col-md-10 offset-md-1 col-lg-10 offset-lg-1 text-xs-center">
-          <Post handlePostDelete={this.handlePostDelete} display={'show'} object={this.props.posts}/>
+          <Post handlePostDelete={this.handlePostDelete.bind(this)} display={'show'} object={this.props.posts}/>
           <br />
           <a className="btn btn-outline-info" href="/posts"> {'<<'} Back To All Posts</a>
           <br />

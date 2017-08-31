@@ -10,7 +10,6 @@ class PostsController < ApplicationController
       postArray.push(
           id: item.id,
           title: item.title,
-          body: item.body,
           created_at: item.display_published_date,
           description: item.description
       )
@@ -26,6 +25,9 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
+    if (@post == nil)
+      raise ActionController::RoutingError.new('Not Found')
+    end
     respond_to do |format|
       format.html {}
       format.json {
@@ -57,7 +59,8 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.json {
         render json: {
-          id: @post.id
+          id: @post.id,
+          created_at: @post.display_published_date
         }
       }
     end
@@ -90,7 +93,7 @@ class PostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Post.friendly.find(params[:id])
+      @post = Post.friendly.find(params[:id]) rescue nil
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

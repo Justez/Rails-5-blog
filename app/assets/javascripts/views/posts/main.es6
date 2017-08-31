@@ -29,7 +29,7 @@ class Main extends React.Component {
       return (
           <div className = "col-md-10 offset-md-1 col-lg-10 offset-lg-1 text-xs-center">
             <h1>Posts</h1>
-            <p className="alert alert-info" role="alert">There are no posts available...</p>
+            <p className="alert alert-light" role="alert">There are no posts available...</p>
             <a className="btn btn-primary" href="/posts/new">New Post</a>
           </div>
         )
