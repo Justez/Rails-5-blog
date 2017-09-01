@@ -4,11 +4,11 @@ import Comment from './components/Comment'
 import CommentForm from './components/CommentForm'
 import Destroy from '../../components/Destroy'
 import { connect } from 'react-redux'
-import { fetchPost } from '../../actions/post'
+import { setPost } from '../../actions/post'
 import { deletePost } from '../../actions/post'
 import { addComment } from '../../actions/comment'
 import { deleteComment } from '../../actions/comment'
-import { fetchCommentsForPage } from '../../actions/comment'
+import { setCommentsForPage } from '../../actions/comment'
 
 class Show extends React.Component {
   constructor(props) {
@@ -21,12 +21,12 @@ class Show extends React.Component {
     fetch(`/posts/${PostsShowView.postId}.json`)
     .then(response => response.json())
     .then(data => {
-      App.Store.dispatch(fetchPost(data))
+      App.Store.dispatch(setPost(data))
     })
     fetch(`/posts/${PostsShowView.postId}/comments`)
     .then(response => response.json())
     .then(data => {
-      App.Store.dispatch(fetchCommentsForPage(data))
+      App.Store.dispatch(setCommentsForPage(data))
     })
   }
 
@@ -53,7 +53,7 @@ class Show extends React.Component {
 
   handleCommentDelete(index) {
     let id = this.props.comments[index].id
-    const url = `/posts/${PostsShowView.postId}/comments/`+id
+    const url = `/posts/${PostsShowView.postId}/comments/${id}`
     fetch(url, {
         method: 'DELETE',
         headers: {
@@ -71,32 +71,31 @@ class Show extends React.Component {
   }
 
   render() {
-    if (this.props.posts.id == undefined) {
+    if (this.props.post == {}) {
       return (
         <div>
           <p className="alert alert-success" role="alert"> Post deleted </p>
         </div>
       )
-    } else if (!(this.props.posts == undefined ) && !(this.props.posts.id == -1)) {
+    } else if (this.props.post) {
       return (
         <div className = "col-md-10 offset-md-1 col-lg-10 offset-lg-1 text-xs-center">
-          <Post handlePostDelete={this.handlePostDelete.bind(this)} display={'show'} object={this.props.posts}/>
-          <br />
+          <Post handlePostDelete={this.handlePostDelete.bind(this)} display={'show'} post={this.props.post}/>
           <a className="btn btn-outline-info" href="/posts"> {'<<'} Back To All Posts</a>
           <br />
           <br />
-          {!(App.State.User == undefined) &&
+          {(App.State.User) &&
             <CommentForm onNewComment={data => this.handleNewComment(data)}/>
           }
-          <Comment comments={this.props.comments} onCommentDelete={index => this.handleCommentDelete(index)}/>
-          {(App.State.User == undefined) &&
+          {(!(App.State.User)) &&
             <p><i>
-              <a href="/users/sign_in" >Login </a>
-              or
-              <a href="/users/sign_up" > register </a>
-              to create comments...</i>
+            <a href="/users/sign_in" >Login </a>
+            or
+            <a href="/users/sign_up" > register </a>
+            to create comments...</i>
             </p>
           }
+          <Comment comments={this.props.comments} onCommentDelete={index => this.handleCommentDelete(index)}/>
         </div>
       )
     } else {
@@ -111,7 +110,7 @@ class Show extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    posts: state.posts.posts,
+    post: state.posts.posts[0],
     comments: state.comments.comments
   }
 }

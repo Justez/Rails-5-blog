@@ -1,11 +1,5 @@
 const initialState = {
-  posts: {
-    id: -1,
-    title: '',
-    description: '',
-    created_at: '',
-    text: ''
-  }
+  posts: []
 }
 
 export default function reducer(state = initialState, action) {
@@ -21,27 +15,27 @@ export default function reducer(state = initialState, action) {
       {
         return {
           ...state,
-          posts: action.posts
+          posts: [action.posts]
         }
     }
     case 'UPDATE_POST':
       {
         return {
           ...state,
-          posts: action.posts
+          posts: [action.posts]
         }
     }
     case 'CREATE_POST':
       {
         return {
           ...state,
-          posts: {
+          posts: [{
             id: action.id,
             title: action.posts.title,
             body: action.posts.body,
             created_at: action.created_at,
             description: action.posts.description
-          }
+          }]
         }
     }
     case 'DELETE_POST':
@@ -54,7 +48,7 @@ export default function reducer(state = initialState, action) {
             }
           })
         } else {
-          data = {}
+          data = [{}]
         }
         return {
           ...state,

@@ -2,7 +2,7 @@ import React from 'react';
 import Post from './components/Post'
 import { connect } from 'react-redux'
 import Destroy from '../../components/Destroy'
-import { fetchPosts } from '../../actions/post'
+import { setPosts } from '../../actions/post'
 import { deletePost } from '../../actions/post'
 
 class Main extends React.Component {
@@ -15,17 +15,18 @@ class Main extends React.Component {
     fetch(`/posts.json`)
     .then(response => response.json())
     .then(data => {
-      App.Store.dispatch(fetchPosts(data))
+      App.Store.dispatch(setPosts(data))
     })
   }
 
   deletePost(index){
     App.Store.dispatch(deletePost(index))
-    Destroy('/posts/'+this.props.posts[index].id, '')
+    Destroy(`/posts/${this.props.posts[index].id}`, '')
   }
 
   render() {
-    if (this.props.posts[0]==undefined) {
+    console.log(this.props.posts)
+    if (this.props.posts.length == 0) {
       return (
           <div className = "col-md-10 offset-md-1 col-lg-10 offset-lg-1 text-xs-center">
             <h1>Posts</h1>
@@ -40,14 +41,13 @@ class Main extends React.Component {
             <div className='row'>
               {
                 this.props.posts.map(
-                  (item, index) => item.id==-1 ?
-                    '' :
+                  (item, index) =>
                     <Post
                       key={index}
                       keyValue={index}
                       onDelete={index => this.deletePost(index)}
                       display={'index'}
-                      object={item}
+                      post={item}
                     />
                   )
               }
@@ -67,5 +67,5 @@ const mapStateToProps = state => {
 const MainView = connect(mapStateToProps)(Main)
 
 export default () => {
-    App.ReactRender(<MainView />)
+    App.ReactRender(<MainView />, 'main')
 }

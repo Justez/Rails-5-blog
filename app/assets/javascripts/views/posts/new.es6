@@ -28,9 +28,8 @@ class New extends React.Component {
       })
       .then(response => response.json())
       .then(data => {
-        console.log('new id ', data.id);
         App.Store.dispatch(createPost(body.post, data.id, data.created_at))
-        window.location.href = `/posts/`+data.id
+        window.location.href = `/posts/${data.id}`
       })
     }
 

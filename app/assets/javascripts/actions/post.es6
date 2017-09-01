@@ -1,9 +1,9 @@
-export const fetchPosts = (data) => ({
+export const setPosts = (data) => ({
   type: 'SHOW_ALL',
   posts: data
 })
 
-export const fetchPost = (data) => ({
+export const setPost = (data) => ({
   type: 'SHOW_ONE',
   posts: data
 })

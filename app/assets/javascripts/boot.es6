@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import * as ViewsTree from './views/index'
 import { Provider } from 'react-redux'
-// import { updateWindowDimensions } from './actions/app'
 import configureStore from './store/configureStore'
 import 'whatwg-fetch'
 

@@ -1,11 +1,5 @@
 const initialState = {
-  comments: {
-    id: -1,
-    body: '',
-    created_at: '',
-    commenter_id: -1,
-    commenter: ''
-  }
+  comments: []
 }
 
 export default function reducer(state = initialState, action) {

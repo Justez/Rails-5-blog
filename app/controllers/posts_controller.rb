@@ -57,6 +57,7 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.save
     respond_to do |format|
+      format.html {}
       format.json {
         render json: {
           id: @post.id,

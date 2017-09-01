@@ -1,4 +1,4 @@
-export const fetchCommentsForPage = (data) => ({
+export const setCommentsForPage = (data) => ({
   type: 'SHOW_ALL_FOR_PAGE',
   comments: data
 })

@@ -6,12 +6,11 @@ export default class Post extends React.Component {
     }
 
     handleEdit() {
-      window.location.href = `/posts/${this.props.object.id}/edit`;
+      window.location.href = `/posts/${this.props.post.id}/edit`;
     }
 
     handleDelete() {
       if (!(App.State.User == undefined) && (this.props.display=='index')) {
-        // console.log('this is index delete', this.props.keyValue);
         this.props.onDelete(this.props.keyValue)
       } else if (!(App.State.User == undefined) && (this.props.display=='show')) {
         this.props.handlePostDelete()
@@ -23,35 +22,35 @@ export default class Post extends React.Component {
         <div className={this.props.display=='index' ? "col-sm-6 col-lg-4" : ""}>
           <div className="card">
             <div className="card-body">
-              <h3 className="card-title">{this.props.object.id} {this.props.object.title}</h3>
-              <p className="card-subtitle mb-2 text-muted">{this.props.object.created_at}</p>
+              <h3 className="card-title">{this.props.post.id} {this.props.post.title}</h3>
+              <p className="card-subtitle mb-2 text-muted">{this.props.post.created_at}</p>
               {this.props.display=='show' &&
                 <p className="card-text">
-                  {this.props.object.body}
+                  {this.props.post.body}
                 </p>
               }
               {
                 (this.props.display=='index')
-                && !(this.props.object.description == undefined)
+                && !(this.props.post.description == undefined)
                 &&
                   <p className="card-text">
                     <strong>Description: </strong>
-                    {this.props.object.description.substring(0, 200)}
+                    {this.props.post.description.substring(0, 200)}
                   </p>
               }
               {
                 !(App.State.User == undefined)
-                && !(this.props.object.description == undefined)
+                && !(this.props.post.description == undefined)
                 && (this.props.display=='show')
                 &&
                   <p className="card-text">
                     <strong>Description: </strong>
-                    {this.props.object.description.substring(0, 200)}
+                    {this.props.post.description.substring(0, 200)}
                   </p>
               }
               {
                 (this.props.display=='index')
-                && <a className="btn btn-outline-primary" href={'/posts/'+this.props.object.id}>Read</a>
+                && <a className="btn btn-outline-primary" href={'/posts/'+this.props.post.id}>Read</a>
               }
               {
                 !(App.State.User == undefined)
