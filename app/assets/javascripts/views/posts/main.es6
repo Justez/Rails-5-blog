@@ -25,7 +25,6 @@ class Main extends React.Component {
   }
 
   render() {
-    console.log(this.props.posts)
     if (this.props.posts.length == 0) {
       return (
           <div className = "col-md-10 offset-md-1 col-lg-10 offset-lg-1 text-xs-center">
@@ -43,10 +42,10 @@ class Main extends React.Component {
                 this.props.posts.map(
                   (item, index) =>
                     <Post
+                      display={'index'}
                       key={index}
                       keyValue={index}
                       onDelete={index => this.deletePost(index)}
-                      display={'index'}
                       post={item}
                     />
                   )

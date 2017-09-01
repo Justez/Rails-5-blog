@@ -39,7 +39,7 @@ class New extends React.Component {
               <h1>New Post</h1>
               <Form onCreate={data => this.handleCreate(data)} />
               <br />
-              <a href="/posts" className="btn btn-outline-info"> {'<<'} Back To All Posts</a >
+              <a className="btn btn-outline-info" href="/posts" > {'<<'} Back To All Posts</a >
             </div>
         )
     }
