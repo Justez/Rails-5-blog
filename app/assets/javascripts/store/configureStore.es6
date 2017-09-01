@@ -2,11 +2,13 @@ import { applyMiddleware, createStore, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
 import promise from 'redux-promise'
 import createLogger from 'redux-logger'
+import { reducer as formReducer } from 'redux-form'
 
 import reducers from '../reducers'
 
 const reducer = combineReducers({
-  ...reducers
+  ...reducers,
+  form: formReducer
 })
 
 export default () => {

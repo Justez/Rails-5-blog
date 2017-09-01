@@ -1,20 +1,20 @@
 import React from 'react'
-import Form from './components/Form'
 // import { connect } from 'react-redux'
+import PostForm from './components/PostForm'
 import { createPost } from '../../actions/post'
 
 class New extends React.Component {
     constructor(props) {
       super(props)
-      this.handleCreate = this.handleCreate.bind(this)
     }
 
-    handleCreate(post) {
+    submit = (values) => {
+      console.log(values.post)
       let body = {
         post: {
-          title: post.title,
-          description: post.description,
-          body: post.body
+          title: values.post.title,
+          description: values.post.description,
+          body: values.post.body
         }
       }
       fetch('/posts', {
@@ -37,7 +37,7 @@ class New extends React.Component {
         return (
             <div>
               <h1>New Post</h1>
-              <Form onCreate={data => this.handleCreate(data)} />
+              <PostForm onSubmit={this.submit} />
               <br />
               <a className="btn btn-outline-info" href="/posts" > {'<<'} Back To All Posts</a >
             </div>

@@ -8,7 +8,6 @@ import { setCommentsForPage } from '../../../actions/comment'
 class Comment extends React.Component {
   constructor(props) {
     super(props)
-    this.handleNewComment = this.handleNewComment.bind(this)
   }
 
   componentWillMount() {
@@ -19,10 +18,10 @@ class Comment extends React.Component {
     })
   }
 
-  handleNewComment(comment) {
+  handleNewComment = (values) => {
     let body = {
       comment: {
-        body: comment
+        body: values.comment.body
       }
     }
     fetch(`/posts/${PostsShowView.postId}/comments/`, {
@@ -59,7 +58,8 @@ class Comment extends React.Component {
     return (
       <div>
         {(App.State.User) ?
-          <CommentForm onNewComment={data => this.handleNewComment(data)}/> :
+          <CommentForm onSubmit={this.handleNewComment}/>
+          :
           <p>
             <i>
               <a href="/users/sign_in" >Login </a>
