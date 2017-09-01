@@ -70,35 +70,40 @@ class Comment extends React.Component {
           </p>
         }
         {(this.props.comments.length < 1) ?
-          <div>
-            <p className="alert alert-light">There are no comments {'for this'} post.</p>
-          </div>
-          :
-          <div>
-            <div className="card" >
-              <div className="card-header">
-                {comment.commenter}
-              </div>
-              <div className="card-body">
-                <blockquote className="card-text">
-                  <p>{comment.body}</p>
-                  <footer className="blockquote-footer"><i>{comment.created_at}</i></footer>
-                </blockquote>
-              </div>
-              {
-                (comment.commenter_id == (!(App.State.User)) ? -1 : App.State.User.id) &&
-                <a
-                  id={index}
-                  onClick={this.handleCommentDelete.bind(this)}
-                  className="btn btn-outline-secondary"
-                >
-                  Delete
-                </a>
-              }
+            <div>
+              <p className="alert alert-light">There are no comments {'for this'} post.</p>
             </div>
-            <br/>
-          </div>
-        }
+          :
+          this.props.comments.map((comment, index) => {
+            return (
+              <div key={index}>
+                <div className="card" >
+                  <div className="card-header">
+                    {comment.commenter}
+                  </div>
+                  <div className="card-body">
+                    <blockquote className="card-text">
+                      <p>{comment.body}</p>
+                      <footer className="blockquote-footer"><i>{comment.created_at}</i></footer>
+                    </blockquote>
+                  </div>
+                  {
+                    (comment.commenter_id == (!(App.State.User)) ? -1 : App.State.User.id) &&
+                    <a
+                      id={index}
+                      onClick={this.handleCommentDelete.bind(this)}
+                      className="btn btn-outline-secondary"
+                    >
+                      Delete
+                    </a>
+                  }
+                </div>
+                <br/>
+            </div>
+            )
+          }
+        )
+      }
       </div>
     )
   }

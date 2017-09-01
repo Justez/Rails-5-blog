@@ -53,8 +53,7 @@ class Show extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    post: state.posts.posts[0],
-    comments: state.comments.comments
+    post: state.posts.posts[0]
   }
 }
 
