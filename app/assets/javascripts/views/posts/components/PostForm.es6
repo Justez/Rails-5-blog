@@ -67,6 +67,7 @@ let PostForm = props => {
           component={renderFieldArea}
           name="post[body]"
           label="Content"
+          onChange={handleChange}
           inputValue={(props.post) ? props.post.body : undefined}
           rows="7"
           validate={[ required, minLength200 ]}
@@ -78,6 +79,7 @@ let PostForm = props => {
           name="post[description]"
           label="Description"
           rows="5"
+          onChange={handleChange}
           inputValue={(props.post) ? props.post.description : undefined}
           validate={[ required, minLength30, maxLength1000 ]}
         />

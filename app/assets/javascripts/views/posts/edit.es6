@@ -36,8 +36,9 @@ class Edit extends React.Component {
         body: values.post.body
       }
     }
-    fetch('/posts', {
-      method: 'POST',
+    App.Store.dispatch(updatePost(body.post))
+    fetch(`/posts/${PostsEditView.post.id}`, {
+      method: 'PATCH',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -45,9 +46,9 @@ class Edit extends React.Component {
       credentials : "same-origin",
       body: JSON.stringify(body).replace(/"(.+)":/g, '"$1":')
     })
-    .then(response => response.json())
+    .then(response => {})
     .then(data => {
-      window.location.href = `/posts/${data.id}`
+      window.location.href = `/posts/${PostsEditView.post.id}`
     })
   }
 
@@ -58,7 +59,7 @@ class Edit extends React.Component {
         <h1>Editing Post</h1>
           <PostForm onChange={this.change} onSubmit={this.submit} post={this.props.post} onDelete={this.handleDelete.bind(this)} />
           <br/>
-          <a href={`/posts/${PostsEditView.post.id}`} className="btn btn-outline-info">Back to Post</a>
+          <a href={`/posts/${this.props.post.id}`} className="btn btn-outline-info">Back to Post</a>
           <a href="/posts" className="btn btn-outline-info"> {'<<'} Back To All Posts</a >
           <br/>
         </div>
