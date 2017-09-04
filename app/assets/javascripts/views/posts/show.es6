@@ -38,7 +38,7 @@ class Show extends React.Component {
           <a className="btn btn-outline-info" href='/posts'> {'<<'} Back To All Posts</a>
           <br />
           <br />
-          <CommentView pageID={this.props.post.id}/>
+          <CommentView userId={(!(App.State.User)) ? -1 : App.State.User.id} pageID={this.props.post.id}/>
         </div>
       )
     } else {

@@ -9,7 +9,6 @@ class New extends React.Component {
     }
 
     submit = (values) => {
-      console.log(values.post)
       let body = {
         post: {
           title: values.post.title,

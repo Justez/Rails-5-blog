@@ -11,7 +11,7 @@ class Comment extends React.Component {
   }
 
   componentWillMount() {
-    fetch(`/posts/${PostsShowView.postId}/comments`)
+    fetch(`/posts/${this.props.pageID}/comments`)
     .then(response => response.json())
     .then(data => {
       App.Store.dispatch(setCommentsForPage(data))
@@ -24,7 +24,8 @@ class Comment extends React.Component {
         body: values.comment.body
       }
     }
-    fetch(`/posts/${PostsShowView.postId}/comments/`, {
+    values.comment.body = ''
+    fetch(`/posts/${this.props.pageID}/comments/`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -42,7 +43,7 @@ class Comment extends React.Component {
   handleCommentDelete(event) {
     event.preventDefault();
     let    id = this.props.comments[event.target.id].id
-    const url = `/posts/${PostsShowView.postId}/comments/${id}`
+    const url = `/posts/${this.props.pageID}/comments/${id}`
     fetch(url, {
         method: 'DELETE',
         headers: {
@@ -57,7 +58,7 @@ class Comment extends React.Component {
   render() {
     return (
       <div>
-        {(App.State.User) ?
+        {(!(this.props.userId == -1)) ?
           <CommentForm onSubmit={this.handleNewComment}/>
           :
           <p>
@@ -87,8 +88,7 @@ class Comment extends React.Component {
                       <footer className="blockquote-footer"><i>{comment.created_at}</i></footer>
                     </blockquote>
                   </div>
-                  {
-                    (comment.commenter_id == (!(App.State.User)) ? -1 : App.State.User.id) &&
+                  {(comment.commenter_id == this.props.userId) &&
                     <a
                       id={index}
                       onClick={this.handleCommentDelete.bind(this)}
@@ -99,11 +99,10 @@ class Comment extends React.Component {
                   }
                 </div>
                 <br/>
-            </div>
+              </div>
             )
-          }
-        )
-      }
+          })
+        }
       </div>
     )
   }
