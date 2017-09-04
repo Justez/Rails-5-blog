@@ -27,9 +27,7 @@ const renderField = ({ input, label, inputValue, meta: { touched, error, warning
     </div>
   </div>
 )
-let attributesArea = {
 
-}
 const renderFieldArea = ({ input, label, inputValue, rows, meta: { touched, error, warning } }) => (
   <div>
     <label>{label}</label>

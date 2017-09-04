@@ -25,13 +25,7 @@ class Show extends React.Component {
   }
 
   render() {
-    if (this.props.post == {}) {
-      return (
-        <div>
-          <p className="alert alert-success" role="alert"> Post deleted!</p>
-        </div>
-      )
-    } else if (this.props.post) {
+    if (this.props.post) {
       return (
         <div className = "col-md-10 offset-md-1 col-lg-10 offset-lg-1 text-xs-center">
           <Post display={'show'} handlePostDelete={this.handlePostDelete.bind(this)} post={this.props.post}/>
