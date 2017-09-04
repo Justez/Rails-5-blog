@@ -1,19 +1,41 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 
+const required = value => value ? undefined : 'Required'
+const maxLength = max => value =>
+  value && value.length > max ? `Must be ${max} characters or less` : undefined
+const maxLength200 = maxLength(200)
+const minLength = min => value =>
+  value && value.length < min ? `Write at least ${min} characters` : undefined
+const minLength10 = minLength(10)
+
+const renderField = ({ input, label, meta: { touched, error, warning } }) => (
+  <div>
+    <label>{label}</label>
+    <div>
+      <input
+        {...input}
+        className="form-control"
+        placeholder={label}
+        type="text"
+      />
+      {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
+    </div>
+  </div>
+)
+
 let CommentForm = props => {
 
   const { handleSubmit } = props
   return (
     <form onSubmit={handleSubmit}>
       <div className="form-group">
-        <label>Comment</label>
         <Field
-          component="textarea"
+          component={renderField}
+          label="Your comment:"
           name="comment[body]"
           type="text"
-          className="form-control"
-          placeholder="comment"
+          validate={[ required, minLength10, maxLength200 ]}
         />
       </div>
       <div className="form-group">

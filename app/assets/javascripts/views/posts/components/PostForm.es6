@@ -6,7 +6,6 @@ const maxLength = max => value =>
   value && value.length > max ? `Must be ${max} characters or less` : undefined
 const maxLength200 = maxLength(200)
 const maxLength1000 = maxLength(1000)
-const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined
 const minLength = min => value =>
   value && value.length < min ? `Write at least ${min} characters` : undefined
 const minLength15 = minLength(15)
